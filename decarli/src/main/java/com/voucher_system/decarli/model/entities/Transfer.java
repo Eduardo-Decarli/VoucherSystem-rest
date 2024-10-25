@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "transfer")
 public class Transfer {
 
     @Id
@@ -13,17 +14,22 @@ public class Transfer {
 
     @OneToOne(mappedBy = "transfer")
     private Reservation reservation;
-    private LocalDateTime arrive;
-    private LocalDateTime leave;
+
+    @Column(nullable = true)
+    private LocalDateTime toArrive;
+    @Column(nullable = true)
+    private LocalDateTime toLeave;
+    @Column(nullable = true)
     private Double value;
 
     public Transfer() {
     }
 
-    public Transfer(Long id, LocalDateTime arrive, LocalDateTime leave, Double value) {
+    public Transfer(Long id, Reservation reservation, LocalDateTime toArrive, LocalDateTime toLeave, Double value) {
         this.id = id;
-        this.arrive = arrive;
-        this.leave = leave;
+        this.reservation = reservation;
+        this.toArrive = toArrive;
+        this.toLeave = toLeave;
         this.value = value;
     }
 
@@ -36,19 +42,19 @@ public class Transfer {
     }
 
     public LocalDateTime getArrive() {
-        return arrive;
+        return toArrive;
     }
 
-    public void setArrive(LocalDateTime arrive) {
-        this.arrive = arrive;
+    public void setArrive(LocalDateTime toArrive) {
+        this.toArrive = toArrive;
     }
 
     public LocalDateTime getLeave() {
-        return leave;
+        return toLeave;
     }
 
-    public void setLeave(LocalDateTime leave) {
-        this.leave = leave;
+    public void setLeave(LocalDateTime toLeave) {
+        this.toLeave = toLeave;
     }
 
     public Double getValue() {
@@ -57,5 +63,13 @@ public class Transfer {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 }

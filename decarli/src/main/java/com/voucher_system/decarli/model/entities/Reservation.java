@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "reservations")
 public class Reservation {
 
     @Id
@@ -30,6 +31,9 @@ public class Reservation {
     @Column(nullable = false)
     private Boolean breakfast;
 
+    @Column(name = "reservation_code")
+    private String reservationCode;
+
     @OneToOne
     @JoinColumn(name = "parking_id", nullable = true)
     private Parking parking;
@@ -40,13 +44,16 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Long id, Integer room, Integer peoples, LocalDate checkin, LocalDate checkout, Boolean breakfast, Parking parking, Double value) {
+    public Reservation(Long id, Client client, Transfer transfer, Integer room, Integer peoples, LocalDate checkin, LocalDate checkout, Boolean breakfast, String reservationCode, Parking parking, Double value) {
         this.id = id;
+        this.client = client;
+        this.transfer = transfer;
         this.room = room;
         this.peoples = peoples;
         this.checkin = checkin;
         this.checkout = checkout;
         this.breakfast = breakfast;
+        this.reservationCode = reservationCode;
         this.parking = parking;
         this.value = value;
     }
@@ -113,5 +120,29 @@ public class Reservation {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Transfer getTransfer() {
+        return transfer;
+    }
+
+    public void setTransfer(Transfer transfer) {
+        this.transfer = transfer;
+    }
+
+    public String getReservationCode() {
+        return reservationCode;
+    }
+
+    public void setReservationCode(String reservationCode) {
+        this.reservationCode = reservationCode;
     }
 }
